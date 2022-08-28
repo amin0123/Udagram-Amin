@@ -39,22 +39,14 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
     try{
     const result = await filterImageFromURL(image_url);
     console.log(result);
-    
-    //result.then(res.sendFile(await result),res.send("errorr"));
-    
            res.status(200)
-              //.send(result.forEach(Object => ))
               .sendFile(result);
-              //console.log("blabla " + result.toString());
-            res.on("finish", () => deleteLocalFiles([result]))
-    //let list: string[] = [result];          
-    //deleteLocalFiles(list);          
-    
-    //return;
+
+           res.on("finish", () => deleteLocalFiles([result]))
     }
-    catch(err){
-      res.send("error");
-      //console.log('error',err.message);
+    catch(error){
+       res.status(420)
+          .send("Message : error processing the image , image might be malformed");
     }
   } );
 
